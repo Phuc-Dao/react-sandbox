@@ -124,6 +124,7 @@ ReactDOM.render(<Main userInfo = {userInfo}/> , target);
 
 //This turns the componant into a state which means it can change
 class Clock extends React.Component {
+  //whenver the state gets rendered it runs the constructor
   constructor(props) {
     super(props);
     this.state = {date: new Date()}; //initializes the state object
@@ -144,7 +145,7 @@ class Clock extends React.Component {
 
   //Function that gets called every second by the interval
   tick() {
-    this.setState({ //setState re-initializes the state every second
+    this.setState({ //setState re-initializes the state every second. Note state has to be an object
       date: new Date()
     });
   }
@@ -163,4 +164,135 @@ ReactDOM.render(
   <Clock />,
   document.getElementById('root')
 );
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Practicing with using state
+class Words extends React.Component {
+  constructor(props){ //always pass props as a parameter to constructor
+    super(props); //pass it as super
+    this.state = {value: 5}; //Initial state object has value of 5
+  }
 
+  //This runs after the render function runs
+  componentDidMount(){
+    this.timerID = setInterval(() => this.setState({value: Math.random()}), 1000);
+  }
+  //This runs after the componant did mount to clean up what was unmounter
+  componentWillUnmount() {
+    clearInterval(this.timerID); 
+  }
+  //renders the elements
+  render(){
+    return(<h1> The current state of the componant is {this.state.value} </h1>);
+  }
+
+}
+
+ReactDOM.render(<Words /> , target);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Practicing with using state
+
+function Display(props){
+  return(
+    <div>
+    <Words />
+    <Words />
+    <Words/>
+    </div>
+  );
+}
+
+//This will display all three
+ReactDOM.render(<Display /> , target);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//This is practicing event handeling
+
+//Create a state
+class ButtonEven extends React.Component {
+  constructor(props){ 
+    super(props);
+    this.state = {isToggle: false }; //always initialize the state by passing it a object
+    this.handleClickEvent = this.handleClickEvent.bind(this); //To use a method you need to bind it to the class first so that the this binding works
+  }
+
+//Create a function that will be called when the event listener works
+handleClickEvent(){
+  if(this.state.isToggle){ //if the state is true then it turns it false if the state is false then it turns it true
+    this.setState({isToggle: false}); // On click if the isToggle state is true than it changes it to false
+  }
+  else{
+    this.setState({isToggle: true});
+  }
+}  
+//Sets the inital render of the 
+render(){
+  return(         //add event listener by passing it as a property.
+      <div><button onClick = {this.handleClickEvent}> The button is {this.state.isToggle ? 'on' : 'off'} </button> </div>);
+  }
+}
+//Render the button
+ReactDOM.render(<ButtonEven /> , target);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//This is practicing event handeling
+
+class ChangeBackground extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {number: 1 };
+    this.handleEvent = this.handleEvent.bind(this);
+    
+  }
+
+  handleEvent(){
+    this.setState({number: Math.random() })
+  }
+
+  render(){
+    return(
+      <div onMouseEnter = {this.handleEvent}> <h1>  The current number is {this.state.number} </h1> </div>
+    );
+  }
+  
+}
+
+ReactDOM.render(< ChangeBackground/> , target);
+
+//You can pass a parameter into the event listener through either arrow functions or using elements
+
+class NewPrint extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {someString: 'whatever'}
+    this.buttonClick = this.buttonClick.bind(this);
+  }
+
+  buttonClick(){
+    this.setState({someString : Math.random()});
+    console.log(this.state.someString)
+  }
+
+render(){
+  return(
+    <button onClick = {this.buttonClick}> click on me </button>
+
+  );
+}
+
+}
+
+ReactDOM.render(<NewPrint /> , target);
