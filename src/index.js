@@ -120,20 +120,47 @@ ReactDOM.render(<Main userInfo = {userInfo}/> , target);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//More practice using properties and componants and using images
-var imageURL ={ url1: 'http://www.candlemaking.com/media/catalog/product/cache/1/image/1000x1000/9df78eab33525d08d6e5fb8d27136e95/f/r/fruit_2.jpg',
-                url2: 'http://krokodili.al/wp-content/uploads/2015/06/watermelon.jpg'
-               }
+//Learning about state
 
-function display(){
-  let ranval = 2; // random number between 0 and 100
-  if(ranval%2 == 0){
-      ReactDOM.render(<img src = {imageURL.url1} height = "500" width = '500' /> , target);
+//This turns the componant into a state which means it can change
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()}; //initializes the state object
   }
-  ReactDOM.render(<img src = {imageURL.url2} height = "500" width = '500' /> , target);
 
+  //Whenever the state first loads in browser
+  componentDidMount() {
+      //initializes a variable called timerID its value is gonna be the value returned by timerID
+     this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID); //Clear timerId when the clock element leaves the browser
+  }
+
+  //Function that gets called every second by the interval
+  tick() {
+    this.setState({ //setState re-initializes the state every second
+      date: new Date()
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2> 
+      </div>
+    );
+  }
 }
 
-//Renders an image
+ReactDOM.render(
+  <Clock />,
+  document.getElementById('root')
+);
 
-setInterval(display() , 500);
