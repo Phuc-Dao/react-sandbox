@@ -8,3 +8,12 @@ app.post()
 app.put()
 app.delete
 */
+//This the path to the home directory
+app.get('/', (req , res) => {
+   throw new Error("broken");
+    res.send("hello world"); 
+});
+
+app.listen(3000) , function(){
+    console.log("The port is listening on 30000");
+};
