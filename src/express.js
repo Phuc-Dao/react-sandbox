@@ -1,7 +1,7 @@
 var things = require('./things.js'); //require things from things.js
 const express = require('express');
 bodyParser = require('body-parser');
-path = require('path');
+var path = require('path');
 var app = express();
 
 //use app.use to use the entire router. The path is /things
@@ -24,11 +24,16 @@ var logger2 = function(req , res , next){
 app.use(logger , logger2);
 
 //Boiler plate code that renders things in the folder of public
-/*
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
-*/
+
+ 
+//Template engine used to render html and css code. Boiler plate code for setting up middleware for view engine
+app.set('view engine' , 'ejs');
+app.set('views' , path.join(__dirname , 'views'))
+
 let objItem = {
     name: "john",
     age: 40,
@@ -37,8 +42,11 @@ let objItem = {
 
 //Hello world gets overwridden by whatever is in the html file if you use boilerplate
 app.get('/' , function(req , res){
-    res.send('Hello world'); //You can send strings
-    res.json(objItem); //You can send json objects
+    //res.send('Hello world'); //You can send strings
+    //res.json(objItem); //You can send json objects 
+    res.render('index' , { //Takes the ejs file as first parameter, and object as optional second parameter if you want
+        titles: 'Whatever' //TO pass anything inside the html file
+     })
 })
 
 //commiting on the react application
