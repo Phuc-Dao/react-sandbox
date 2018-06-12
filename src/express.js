@@ -23,15 +23,22 @@ var logger2 = function(req , res , next){
 //execute middle ware function by saying app.use. Executes bot these functions when its loaded
 app.use(logger , logger2);
 
-
 //Boiler plate code that renders things in the folder of public
+/*
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
+*/
+let objItem = {
+    name: "john",
+    age: 40,
+    occupation: "doctor"
+}
 
-//Hello world gets overwridden by whatever is in the html file
+//Hello world gets overwridden by whatever is in the html file if you use boilerplate
 app.get('/' , function(req , res){
-    res.send('Hello world'); 
+    res.send('Hello world'); //You can send strings
+    res.json(objItem); //You can send json objects
 })
 
 //commiting on the react application
