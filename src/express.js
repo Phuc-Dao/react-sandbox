@@ -45,8 +45,8 @@ app.get('/' , function(req , res){
     //res.send('Hello world'); //You can send strings
     //res.json(objItem); //You can send json objects 
     res.render('index' , { //Takes the ejs file as first parameter, and object as optional second parameter if you want
-        titles: 'Whatever' //TO pass anything inside the html file
-     })
+        titles: 'The data has been inserted' //TO pass anything inside the html file. Whatever is in the index file
+     }) //to get access to the variables you need to wrap them in <% = titles %>
 })
 
 //commiting on the react application
