@@ -27,7 +27,7 @@ app.use(logger , logger2);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, 'public')));
+ app.use(express.static(path.join(__dirname, 'public')));
 
  
 //Template engine used to render html and css code. Boiler plate code for setting up middleware for view engine
